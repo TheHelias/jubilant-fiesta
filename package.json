@@ -12,7 +12,6 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.1",
     "@babel/cli": "^7.8.4",
@@ -21,7 +20,8 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2"
   },
   "nodemonConfig": {
     "exec": "npm run dev",
