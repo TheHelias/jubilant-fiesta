@@ -1,4 +1,4 @@
-# Validation rule
+# Validation rule API
 
 An api that validates data in it's payload based on a set of rules in the payload
 
