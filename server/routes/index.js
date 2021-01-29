@@ -27,39 +27,45 @@ router.post('/validate-rule', async (req, res, next) => {
       status: 'error',
       data: null
     })
+
   try {
+    // check for rule field
     if (!payload.rule) {
       genericErrorResponse('rule is required.')
       return
     }
 
+    // check for data field
     if (!payload.data) {
       genericErrorResponse('data is required.')
       return
     }
 
+    // validate rule field type
     if (typeof payload.rule !== 'object') {
       genericErrorResponse('rule should be an object.')
       return
     }
 
+    // validate data field type
     if (
       (typeof payload.data === 'object' && payload.data !== null) ||
       typeof payload.data === 'string'
     ) {
-      true
     } else {
       genericErrorResponse('data should be an object, array or string.')
       return
     }
-    console.log(0)
+
+    // check for all expected rule keys
     for (let i = 0; i < ruleKeys.length; i++) {
       if (!payload.rule.hasOwnProperty(ruleKeys[i])) {
         genericErrorResponse(`${ruleKeys[i]} is required.`)
         return
       }
     }
-    console.log(1)
+
+    // check nested rule field, validate it and set field value
     if (payload.rule.field.includes('.')) {
       const nestings = payload.rule.field.split('.')
       if (nestings.length > 2) {
@@ -80,7 +86,7 @@ router.post('/validate-rule', async (req, res, next) => {
     if (!validConditions.includes(payload.rule.condition)) {
       genericErrorResponse("condition isn't valid.")
     }
-    console.log(fieldValue)
+
     const ruleValidationResponse = (error, condition) => {
       const data = {
         validation: {
@@ -106,6 +112,7 @@ router.post('/validate-rule', async (req, res, next) => {
       }
     }
 
+    // rule validation
     switch (payload.rule.condition) {
       case 'eq':
         if (fieldValue === payload.rule.condition_value) {
@@ -146,4 +153,5 @@ router.post('/validate-rule', async (req, res, next) => {
     genericErrorResponse('Invalid JSON payload passed.')
   }
 })
+
 export default router
